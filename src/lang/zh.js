@@ -55,6 +55,11 @@ export default {
     closeOthers: '关闭其它',
     closeAll: '关闭所有'
   },
+  dialog: {
+    save: '保 存',
+    update: '修 改',
+    cancel: '取 消'
+  },
   table: {
     index: '序号',
     add: '添加',
@@ -62,6 +67,7 @@ export default {
     delete: '删除',
     search: '搜索',
     reset: '重置',
+    refresh: '刷新'
   },
   dict: {
     type: '类型',

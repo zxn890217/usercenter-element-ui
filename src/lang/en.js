@@ -11,8 +11,8 @@ export default {
     page404: '404',
     theme: 'Theme',
     i18n: 'I18n',
-    system: 'SystemManagement',
-    dict: 'DataDictionary'
+    system: 'System',
+    dict: 'Dictionary'
   },
   navbar: {
     logOut: 'Log Out',
@@ -55,6 +55,11 @@ export default {
     closeOthers: 'Close Others',
     closeAll: 'Close All'
   },
+  dialog: {
+    save: 'Save',
+    update: 'Update',
+    cancel: 'Cancel'
+  },
   table: {
     index: 'SEQ',
     add: 'ADD',
@@ -62,6 +67,7 @@ export default {
     delete: 'DELETE',
     search: 'Search',
     reset: 'Reset',
+    refresh: 'Refresh'
   },
   dict: {
     type: 'Type',

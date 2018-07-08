@@ -70,9 +70,22 @@ export const asyncRouterMap = [
       icon: 'component'
     },
     children: [
-      { path: 'dict', component: () => import('@/views/system/dict/table'), name: 'dict', meta: { title: 'dict', icon: 'dict'}}
+      {
+        name: 'dict',
+        path: 'dict',
+        component: () => import('@/views/system/dict/table'),
+        meta: {
+          title: 'dict',
+          icon: 'dict'
+        },
+        children: [
+          { name: 'add', path: 'add', component: () => import('@/views/system/dict/dialog/add'), meta: { noCache: true }},
+          { path: 'update', component: () => import('@/views/system/dict/dialog/update'), meta: { noCache: true }}
+        ]
+      }
     ]
   },
+
   {
     path: '/theme',
     component: Layout,
