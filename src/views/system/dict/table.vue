@@ -105,7 +105,7 @@
         })
       },
       toAdd(){
-          this.$router.push("add");
+          this.$router.push("/system/dict/add");
           //router.push("add");
       },
       toUpdate(){
