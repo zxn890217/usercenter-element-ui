@@ -48,14 +48,26 @@
         :total="total">
       </el-pagination>
     </div>
-    <router-view></router-view>
+    <transition name="fade">
+      <router-view/>
+    </transition>
   </div>
 </template>
 
 <script>
   import Vue from 'vue'
+  import VueRouter from 'vue-router'
   import { fetchPage } from '@/api/dict'
+  import AddDialog from './dialog/add'
+  import UpdateDialog from './dialog/update'
   export default {
+    router: new VueRouter({
+      mode: 'abstract',
+      routes: [
+        { path: '/add', component: AddDialog },
+        { path: '/update', component: UpdateDialog }
+      ]
+    }),
     data() {
       return {
         query: {
@@ -105,11 +117,10 @@
         })
       },
       toAdd(){
-          this.$router.push("/system/dict/add");
-          //router.push("add");
+          this.$router.push({path: '/add'});
       },
       toUpdate(){
-
+        this.$router.push({path: '/update'});
       },
       toDelete(){
 

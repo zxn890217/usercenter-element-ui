@@ -77,11 +77,7 @@ export const asyncRouterMap = [
         meta: {
           title: 'dict',
           icon: 'dict'
-        },
-        children: [
-          { name: 'add', path: 'add', component: () => import('@/views/system/dict/dialog/add'), hidden: true, meta: { noCache: true }},
-          { path: 'update', component: () => import('@/views/system/dict/dialog/update'), hidden: true, meta: { noCache: true }}
-        ]
+        }
       }
     ]
   },

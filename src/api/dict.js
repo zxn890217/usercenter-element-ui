@@ -11,6 +11,18 @@ export function fetchPage(query) {
   })
 }
 
+
+export function fetchSave(dict) {
+  return request({
+    url: '/dict',
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: dict
+  })
+}
+
 export function fetchGet(id) {
   return request({
     url: '/dict/' + id,
