@@ -1,17 +1,17 @@
 <template>
   <div class="app-container">
-    <el-form :inline="true" class="demo-form-inline">
-      <el-form-item>
-        <el-input v-model="query.type" :placeholder="$t('dict.type')"></el-input>
+    <el-form :model="query" :inline="true" ref="searchForm">
+      <el-form-item prop="type">
+        <el-input v-model="query.type" :placeholder="$t('dict.type')" clearable></el-input>
       </el-form-item>
-      <el-form-item>
-        <el-input v-model="query.code" :placeholder="$t('dict.code')"></el-input>
+      <el-form-item prop="code">
+        <el-input v-model="query.code" :placeholder="$t('dict.code')" clearable></el-input>
       </el-form-item>
-      <el-form-item>
-        <el-input v-model="query.text" :placeholder="$t('dict.text')"></el-input>
+      <el-form-item prop="text">
+        <el-input v-model="query.text" :placeholder="$t('dict.text')" clearable></el-input>
       </el-form-item>
-      <el-form-item>
-        <el-input v-model="query.value" :placeholder="$t('dict.value')"></el-input>
+      <el-form-item prop="value">
+        <el-input v-model="query.value" :placeholder="$t('dict.value')" clearable></el-input>
       </el-form-item>
     </el-form>
     <el-row style="margin-bottom: 10px;">
@@ -21,15 +21,15 @@
         <el-button type="primary" size="small" icon="el-icon-delete" @click="toDelete">{{$t('table.delete')}}</el-button>
       </el-button-group>
       <el-button-group style="position: absolute; right: 0px;">
-        <el-button type="primary" size="small" icon="el-icon-search">{{$t('table.search')}}</el-button>
-        <el-button type="default" size="small">
+        <el-button type="primary" size="small" icon="el-icon-search" @click="loadData">{{$t('table.search')}}</el-button>
+        <el-button type="default" size="small" @click="resetForm">
           <svg-icon icon-class="reset" />
           {{$t('table.reset')}}
         </el-button>
-        <el-button type="default" size="small" icon="el-icon-refresh" @click="loadData()">{{$t('table.refresh')}}</el-button>
+        <el-button type="default" size="small" icon="el-icon-refresh" @click="loadData">{{$t('table.refresh')}}</el-button>
       </el-button-group>
     </el-row>
-    <el-table :data="tableData" border highlight-current-row @row-click="getSelectedRow" style="width: 100%">
+    <el-table v-loading="loading" :data="tableData" border highlight-current-row @row-click="getSelectedRow" style="width: 100%">
       <el-table-column type="index" :label="$t('table.index')" :index="indexMethod" align="center" width="55"></el-table-column>
       <el-table-column prop="type" :label="$t('dict.type')"></el-table-column>
       <el-table-column prop="code" :label="$t('dict.code')"></el-table-column>
@@ -62,7 +62,6 @@
   import UpdateDialog from './dialog/update'
   export default {
     router: new VueRouter({
-      mode: 'abstract',
       routes: [
         { path: '/add', component: AddDialog },
         { path: '/update', component: UpdateDialog }
@@ -71,8 +70,12 @@
     data() {
       return {
         query: {
-          'sort': 'id',
-          'order': 'desc'
+          sort: 'id',
+          order: 'desc',
+          type: null,
+          code: null,
+          text: null,
+          value: null
         },
         total: 0,
         currentPage: 1,
@@ -80,6 +83,7 @@
         pageSizes: [10, 20, 30, 50, 80, 100, 200],
         tableData: [],
         selectedRow: null,
+        loading: false,
         dialog:{
           title: null,
           visible: false,
@@ -104,9 +108,15 @@
         this.loadData();
       },
       loadData() {
-        this.query.offset = (this.currentPage - 1) * this.pageSize;
-        this.query.limit = this.pageSize;
-        fetchPage(this.query).then(response => {
+        this.loading = true;
+        var params = JSON.parse(JSON.stringify(this.query));
+        for(var key in params){
+          if('' == params[key])
+            params[key] = null;
+        }
+        params.offset = (this.currentPage - 1) * this.pageSize;
+        params.limit = this.pageSize;
+        fetchPage(params).then(response => {
           if(response.data.success) {
             this.tableData.splice(0, this.tableData.length);
             this.total = response.data.result.total;
@@ -114,7 +124,14 @@
               Vue.set(this.tableData, i, response.data.result.rows[i]);
             }
           }
+          this.loading = false;
+        }).catch(e => {
+          this.loading = false;
         })
+      },
+      resetForm() {
+        this.$refs['searchForm'].resetFields();
+        this.loadData();
       },
       toAdd(){
           this.$router.push({path: '/add'});

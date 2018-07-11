@@ -4,7 +4,7 @@
       <el-form-item :label="$t('dict.type')" prop="type">
         <el-input v-model="form.type"></el-input>
       </el-form-item>
-      <el-form-item :label="$t('dict.code')" required prop="code">
+      <el-form-item :label="$t('dict.code')" prop="code">
         <el-input v-model="form.code"></el-input>
       </el-form-item>
       <el-form-item :label="$t('dict.text')" prop="text">
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+  import { vsprintf } from 'sprintf-js/dist/sprintf.min.js'
   import { fetchSave } from '@/api/dict'
 
   export default {
@@ -31,28 +32,45 @@
         form: {},
         rules:{
           type:[
-            { required: true, message: '请输入类型', trigger: 'blur' },
-            { max: 50, message: '最多50个字符', trigger: 'blur' }
+            { required: true, message:this.$t('rules.message.required'), trigger: 'blur' },
+            { max: 50, message: vsprintf(this.$t('rules.message.maxLen'), 50), trigger: 'blur' }
           ],
           code:[
-            { required: true, message: '请输入代码', trigger: 'blur' },
-            { max: 50, message: '最多50个字符', trigger: 'blur' }
+            { required: true, message: this.$t('rules.message.required'), trigger: 'blur' },
+            { max: 50, message: vsprintf(this.$t('rules.message.maxLen'), 50), trigger: 'blur' }
           ],
           text:[
-            { max: 100, message: '最多100个字符', trigger: 'blur' }
+            { max: 100, message: vsprintf(this.$t('rules.message.maxLen'), 100), trigger: 'blur' }
           ],
           value:[
-            { max: 100, message: '最多100个字符', trigger: 'blur' }
+            { max: 100, message: vsprintf(this.$t('rules.message.maxLen'), 100), trigger: 'blur' }
           ]
         }
       };
     },
     methods: {
       cancel(){
-
+        this.$router.push("/");
       },
       save(){
-
+        fetchSave(this.form).then(response => {
+          if(response.data.success) {
+            this.$notify({
+              title: this.$t('notify.title.success'),
+              message: response.data.msg,
+              type: 'success'
+            });
+            this.$parent.loadData();
+            this.$router.push("/");
+          }
+          else{
+            this.$notify({
+              title: this.$t('notify.title.fail'),
+              message: response.data.msg,
+              type: 'warning'
+            });
+          }
+        })
       },
       onClose(){
         this.$router.push("/");

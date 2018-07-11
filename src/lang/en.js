@@ -60,6 +60,14 @@ export default {
     update: 'Update',
     cancel: 'Cancel'
   },
+  notify: {
+    title:{
+      success: 'Success',
+      fail: 'Fail',
+      warning: 'Warning',
+      error: 'Error'
+    }
+  },
   table: {
     index: 'SEQ',
     add: 'ADD',
@@ -68,6 +76,24 @@ export default {
     search: 'Search',
     reset: 'Reset',
     refresh: 'Refresh'
+  },
+  rules:{
+    message:{
+      required: 'required',
+      requiredName: '%s required',
+      maxLen: 'cannot be longer than %s characters',
+      minLen: 'must be at least %s characters',
+      maxValue: 'cannot be greater than %s',
+      minValue: 'cannot be less than %s',
+      regex: 'not in the right format',
+      mismatch: 'does not match pattern %s',
+      phoneNum: 'phone number is not correct',
+      email: 'email is not correct',
+      integer: 'please enter the integer',
+      number: 'please enter the number',
+      integer_gt_0: 'please enter the integer greater 0',
+      number_gt_0: 'please enter the number greater 0'
+    }
   },
   dict: {
     type: 'Type',

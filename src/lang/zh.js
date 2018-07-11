@@ -60,6 +60,14 @@ export default {
     update: '修 改',
     cancel: '取 消'
   },
+  notify: {
+    title:{
+      success: '成功',
+      fail: '失败',
+      warning: '警告',
+      error: '错误'
+    }
+  },
   table: {
     index: '序号',
     add: '添加',
@@ -68,6 +76,24 @@ export default {
     search: '搜索',
     reset: '重置',
     refresh: '刷新'
+  },
+  rules:{
+    message:{
+      required: '必填',
+      requiredName: '%s必填',
+      maxLen: '不能超过%s个字符',
+      minLen: '不能少于%s个字符',
+      maxValue: '不能大于%s',
+      minValue: '不能小于%s',
+      regex: '格式不正确',
+      mismatch: '格式不匹配%s',
+      phoneNum: '手机号格式不正确',
+      email: '邮箱格式不正确',
+      integer: '请填写整数',
+      number: '请填写数值',
+      integer_gt_0: '请填写大于0的整数',
+      number_gt_0: '请填写大于0的数值'
+    }
   },
   dict: {
     type: '类型',
