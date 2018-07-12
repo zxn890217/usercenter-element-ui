@@ -2,16 +2,16 @@
   <div class="app-container">
     <el-form :model="query" :inline="true" ref="searchForm">
       <el-form-item prop="type">
-        <el-input v-model="query.type" :placeholder="$t('dict.type')" clearable></el-input>
+        <el-input v-model="query.type" :placeholder="$t('dict.type')" clearable maxlength="30"></el-input>
       </el-form-item>
       <el-form-item prop="code">
-        <el-input v-model="query.code" :placeholder="$t('dict.code')" clearable></el-input>
+        <el-input v-model="query.code" :placeholder="$t('dict.code')" clearable maxlength="30"></el-input>
       </el-form-item>
       <el-form-item prop="text">
-        <el-input v-model="query.text" :placeholder="$t('dict.text')" clearable></el-input>
+        <el-input v-model="query.text" :placeholder="$t('dict.text')" clearable maxlength="30"></el-input>
       </el-form-item>
       <el-form-item prop="value">
-        <el-input v-model="query.value" :placeholder="$t('dict.value')" clearable></el-input>
+        <el-input v-model="query.value" :placeholder="$t('dict.value')" clearable maxlength="30"></el-input>
       </el-form-item>
     </el-form>
     <el-row style="margin-bottom: 10px;">
@@ -137,10 +137,26 @@
           this.$router.push({path: '/add'});
       },
       toUpdate(){
-        this.$router.push({path: '/update'});
+        if(this.selectedRow)
+          this.$router.push({path: '/update'});
+        else{
+          this.$message({
+            message: this.$t('notify.unselectedRow'),
+            type: 'warning'
+          });
+        }
+
       },
       toDelete(){
+        if(this.selectedRow){
 
+        }
+        else{
+          this.$message({
+            message: this.$t('notify.unselectedRowToDel'),
+            type: 'warning'
+          });
+        }
       }
     },
     mounted: function () {

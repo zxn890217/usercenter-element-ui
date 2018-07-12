@@ -1,16 +1,16 @@
 <template>
-  <el-dialog :title="$t('table.update')" :visible.sync="visible" @close="onClose">
-    <el-form :model="form">
-      <el-form-item :label="$t('dict.type')">
+  <el-dialog :title="$t('table.update')" width="560px" :visible.sync="visible" @close="onClose">
+    <el-form :model="form" :rules="rules" ref="form" label-width="70px" size="small">
+      <el-form-item :label="$t('dict.type')" prop="type">
         <el-input v-model="form.type"></el-input>
       </el-form-item>
-      <el-form-item :label="$t('dict.code')">
+      <el-form-item :label="$t('dict.code')" prop="code">
         <el-input v-model="form.code"></el-input>
       </el-form-item>
-      <el-form-item :label="$t('dict.text')">
+      <el-form-item :label="$t('dict.text')" prop="text">
         <el-input v-model="form.text"></el-input>
       </el-form-item>
-      <el-form-item :label="$t('dict.value')">
+      <el-form-item :label="$t('dict.value')" prop="value">
         <el-input v-model="form.value"></el-input>
       </el-form-item>
     </el-form>
@@ -26,12 +26,28 @@
     data() {
       return {
         visible: true,
-        form: {}
+        form: {},
+        rules:{
+          type:[
+            { required: true, message:this.$t('rules.message.required'), trigger: 'blur' },
+            { max: 50, message: vsprintf(this.$t('rules.message.maxLen'), 50), trigger: 'blur' }
+          ],
+          code:[
+            { required: true, message: this.$t('rules.message.required'), trigger: 'blur' },
+            { max: 50, message: vsprintf(this.$t('rules.message.maxLen'), 50), trigger: 'blur' }
+          ],
+          text:[
+            { max: 100, message: vsprintf(this.$t('rules.message.maxLen'), 100), trigger: 'blur' }
+          ],
+          value:[
+            { max: 100, message: vsprintf(this.$t('rules.message.maxLen'), 100), trigger: 'blur' }
+          ]
+        }
       };
     },
     methods: {
       cancel(){
-
+        this.$router.push("/");
       },
       save(){
 

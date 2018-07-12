@@ -66,7 +66,10 @@ export default {
       fail: '失败',
       warning: '警告',
       error: '错误'
-    }
+    },
+    unselectedRow: '请选择一行数据',
+    unselectedRowToDel: '请选择一行要删除的数据',
+    uncheckedRows: '请先勾选列表中的数据'
   },
   table: {
     index: '序号',

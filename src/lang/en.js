@@ -66,7 +66,10 @@ export default {
       fail: 'Fail',
       warning: 'Warning',
       error: 'Error'
-    }
+    },
+    unselectedRow: 'Please select one row in table',
+    unselectedRowToDel: 'Please select one row to delete in table',
+    uncheckedRows: 'Please check rows in table'
   },
   table: {
     index: 'SEQ',
