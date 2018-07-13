@@ -23,7 +23,7 @@
 
 <script>
   import { vsprintf } from 'sprintf-js/dist/sprintf.min.js'
-  import { fetchSave } from '@/api/dict'
+  import { fetchSave } from '@/api/restful'
 
   export default {
     data() {
@@ -53,7 +53,7 @@
         this.$router.push("/");
       },
       save(){
-        fetchSave(this.form).then(response => {
+        fetchSave('/dict', this.form).then(response => {
           if(response.data.success) {
             this.$notify({
               title: this.$t('notify.title.success'),

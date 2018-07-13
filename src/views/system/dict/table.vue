@@ -57,7 +57,7 @@
 <script>
   import Vue from 'vue'
   import VueRouter from 'vue-router'
-  import { fetchPage } from '@/api/dict'
+  import { fetchPage } from '@/api/restful'
   import AddDialog from './dialog/add'
   import UpdateDialog from './dialog/update'
   export default {
@@ -116,7 +116,7 @@
         }
         params.offset = (this.currentPage - 1) * this.pageSize;
         params.limit = this.pageSize;
-        fetchPage(params).then(response => {
+        fetchPage('/dict/page', params).then(response => {
           if(response.data.success) {
             this.tableData.splice(0, this.tableData.length);
             this.total = response.data.result.total;

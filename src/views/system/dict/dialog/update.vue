@@ -1,16 +1,16 @@
 <template>
   <el-dialog :title="$t('table.update')" width="560px" :visible.sync="visible" @close="onClose">
-    <el-form :model="form" :rules="rules" ref="form" label-width="70px" size="small">
-      <el-form-item :label="$t('dict.type')" prop="type">
+    <el-form :model="form" :rules="rules" label-width="70px" size="small">
+      <el-form-item :label="$t('dict.type')">
         <el-input v-model="form.type"></el-input>
       </el-form-item>
-      <el-form-item :label="$t('dict.code')" prop="code">
+      <el-form-item :label="$t('dict.code')">
         <el-input v-model="form.code"></el-input>
       </el-form-item>
-      <el-form-item :label="$t('dict.text')" prop="text">
+      <el-form-item :label="$t('dict.text')">
         <el-input v-model="form.text"></el-input>
       </el-form-item>
-      <el-form-item :label="$t('dict.value')" prop="value">
+      <el-form-item :label="$t('dict.value')">
         <el-input v-model="form.value"></el-input>
       </el-form-item>
     </el-form>
@@ -22,11 +22,15 @@
 </template>
 
 <script>
+  import { vsprintf } from 'sprintf-js/dist/sprintf.min.js'
+  import { fetchUpdate } from '@/api/restful'
+
   export default {
     data() {
+      var form = JSON.parse(JSON.stringify(this.$parent.selectedRow));
       return {
         visible: true,
-        form: {},
+        form: form,
         rules:{
           type:[
             { required: true, message:this.$t('rules.message.required'), trigger: 'blur' },
@@ -47,10 +51,27 @@
     },
     methods: {
       cancel(){
-        this.$router.push("/");
+
       },
       save(){
-
+        fetchUpdate('/dict/'+this.form.id, this.form).then(response => {
+          if(response.data.success){
+            this.$notify({
+              title: this.$t('notify.title.success'),
+              message: response.data.msg,
+              type: 'success'
+            });
+            this.$parent.loadData();
+            this.$router.push("/");
+          }
+          else{
+            this.$notify({
+              title: this.$t('notify.title.fail'),
+              message: response.data.msg,
+              type: 'warning'
+            });
+          }
+        })
       },
       onClose(){
         this.$router.push("/");

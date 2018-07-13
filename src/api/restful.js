@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export function fetchPage(query) {
+export function fetchPage(url, query) {
   return request({
-    url: '/dict/page',
+    url: url,
     method: 'post',
     headers: {
       'Content-Type': 'application/json'
@@ -12,9 +12,9 @@ export function fetchPage(query) {
 }
 
 
-export function fetchSave(dict) {
+export function fetchSave(url, dict) {
   return request({
-    url: '/dict',
+    url: url,
     method: 'post',
     headers: {
       'Content-Type': 'application/json'
@@ -23,17 +23,17 @@ export function fetchSave(dict) {
   })
 }
 
-export function fetchGet(id) {
+export function fetchGet(url) {
   return request({
-    url: '/dict/' + id,
+    url: url,
     method: 'get'
   })
 }
 
-export function fetchUpdate(dict) {
+export function fetchUpdate(url, dict) {
   return request({
-    url: '/dict/' + dict.id,
-    method: 'post',
+    url: url,
+    method: 'put',
     headers: {
       'Content-Type': 'application/json'
     },
@@ -41,9 +41,9 @@ export function fetchUpdate(dict) {
   })
 }
 
-export function fetchDelete(id) {
+export function fetchDelete(url) {
   return request({
-    url: '/dict/' + id,
+    url: url,
     method: 'delete'
   })
 }

@@ -101,7 +101,7 @@ export default {
   dict: {
     type: 'Type',
     code: 'Code',
-    text: 'Desc',
+    text: 'Text',
     value: 'Value'
   }
 }
