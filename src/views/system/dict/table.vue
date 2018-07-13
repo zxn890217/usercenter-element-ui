@@ -21,15 +21,11 @@
         <el-button type="primary" size="small" icon="el-icon-delete" @click="toDelete">{{$t('table.delete')}}</el-button>
       </el-button-group>
       <el-button-group style="position: absolute; right: 0px;">
-        <el-button type="primary" size="small" icon="el-icon-search" @click="loadData">{{$t('table.search')}}</el-button>
-        <el-button type="default" size="small" @click="resetForm">
-          <svg-icon icon-class="reset" />
-          {{$t('table.reset')}}
-        </el-button>
-        <el-button type="default" size="small" icon="el-icon-refresh" @click="loadData">{{$t('table.refresh')}}</el-button>
+        <el-button type="primary" size="small" icon="el-icon-search" @click="reload">{{$t('table.search')}}</el-button>
+        <el-button type="default" size="small" icon="el-icon-refresh" @click="resetForm">{{$t('table.reset')}}</el-button>
       </el-button-group>
     </el-row>
-    <el-table v-loading="loading" :data="tableData" border highlight-current-row @row-click="getSelectedRow" style="width: 100%">
+    <el-table v-loading="loading" :data="tableData" border highlight-current-row @row-click="onRowSelected" style="width: 100%">
       <el-table-column type="index" :label="$t('table.index')" :index="indexMethod" align="center" width="55"></el-table-column>
       <el-table-column prop="type" :label="$t('dict.type')"></el-table-column>
       <el-table-column prop="code" :label="$t('dict.code')"></el-table-column>
@@ -41,7 +37,7 @@
         background
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="currentPage"
+        :current-page.sync="currentPage"
         :page-sizes="pageSizes"
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
@@ -57,110 +53,31 @@
 <script>
   import Vue from 'vue'
   import VueRouter from 'vue-router'
-  import { fetchPage } from '@/api/restful'
-  import AddDialog from './dialog/add'
-  import UpdateDialog from './dialog/update'
+  import { fetchPage, fetchDelete } from '@/api/restful'
+  import { tableOptions, tableMethods, loadTableData, reloadTableData, updateTableRow, deleteTableRow } from '@/utils/utils'
   export default {
-    router: new VueRouter({
-      routes: [
-        { path: '/add', component: AddDialog },
-        { path: '/update', component: UpdateDialog }
-      ]
-    }),
     data() {
       return {
+        ...tableOptions.apply(this),
+        baseUrl: '/dict',
         query: {
           sort: 'id',
-          order: 'desc',
-          type: null,
-          code: null,
-          text: null,
-          value: null
-        },
-        total: 0,
-        currentPage: 1,
-        pageSize: 10,
-        pageSizes: [10, 20, 30, 50, 80, 100, 200],
-        tableData: [],
-        selectedRow: null,
-        loading: false,
-        dialog:{
-          title: null,
-          visible: false,
-          buttons:[]
+          order: 'desc'
         }
-      }
+      };
     },
     methods: {
-      getSelectedRow(row, event, column) {
-        this.selectedRow = row;
-      },
-      indexMethod(index) {
-        return (index+1)+ (this.currentPage - 1) * this.pageSize;
-      },
-      handleSizeChange(val) {
-        this.pageSize = val;
-        this.currentPage = 1;
-        this.loadData();
-      },
-      handleCurrentChange(val) {
-        this.currentPage = val;
-        this.loadData();
-      },
-      loadData() {
-        this.loading = true;
-        var params = JSON.parse(JSON.stringify(this.query));
-        for(var key in params){
-          if('' == params[key])
-            params[key] = null;
-        }
-        params.offset = (this.currentPage - 1) * this.pageSize;
-        params.limit = this.pageSize;
-        fetchPage('/dict/page', params).then(response => {
-          if(response.data.success) {
-            this.tableData.splice(0, this.tableData.length);
-            this.total = response.data.result.total;
-            for(var i=0; i<response.data.result.rows.length; i++) {
-              Vue.set(this.tableData, i, response.data.result.rows[i]);
-            }
-          }
-          this.loading = false;
-        }).catch(e => {
-          this.loading = false;
-        })
-      },
-      resetForm() {
-        this.$refs['searchForm'].resetFields();
-        this.loadData();
-      },
-      toAdd(){
-          this.$router.push({path: '/add'});
-      },
-      toUpdate(){
-        if(this.selectedRow)
-          this.$router.push({path: '/update'});
-        else{
-          this.$message({
-            message: this.$t('notify.unselectedRow'),
-            type: 'warning'
-          });
-        }
-
-      },
-      toDelete(){
-        if(this.selectedRow){
-
-        }
-        else{
-          this.$message({
-            message: this.$t('notify.unselectedRowToDel'),
-            type: 'warning'
-          });
-        }
-      }
+      ...tableMethods.apply(this)
     },
     mounted: function () {
-      this.loadData();
-    }
+      this.reload();
+    },
+    router: new VueRouter({
+      mode: 'abstract',
+      routes: [
+        { path: '/add', component: () => import('./dialog/add') },
+        { path: '/update', component: () => import('./dialog/update') }
+      ]
+    })
   }
 </script>

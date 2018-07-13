@@ -58,18 +58,23 @@ export default {
   dialog: {
     save: '保 存',
     update: '修 改',
-    cancel: '取 消'
+    cancel: '取 消',
+    confirm: '确定',
+    submitting: '提交中'
   },
   notify: {
     title:{
       success: '成功',
       fail: '失败',
       warning: '警告',
-      error: '错误'
+      error: '错误',
+      prompt: '提示'
     },
     unselectedRow: '请选择一行数据',
     unselectedRowToDel: '请选择一行要删除的数据',
-    uncheckedRows: '请先勾选列表中的数据'
+    uncheckedRows: '请先勾选列表中的数据',
+    confirmToDel: '确定删除选中行？',
+    cancelDel: '已取消删除'
   },
   table: {
     index: '序号',

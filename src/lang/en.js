@@ -58,18 +58,23 @@ export default {
   dialog: {
     save: 'Save',
     update: 'Update',
-    cancel: 'Cancel'
+    cancel: 'Cancel',
+    confirm: 'Confirm',
+    submitting: 'Submitting'
   },
   notify: {
     title:{
       success: 'Success',
       fail: 'Fail',
       warning: 'Warning',
-      error: 'Error'
+      error: 'Error',
+      prompt: 'Prompt'
     },
     unselectedRow: 'Please select one row in table',
     unselectedRowToDel: 'Please select one row to delete in table',
-    uncheckedRows: 'Please check rows in table'
+    uncheckedRows: 'Please check rows in table',
+    confirmToDel: 'Are you sure to delete selected row ?',
+    cancelDel: 'Deletion has been cancelled'
   },
   table: {
     index: 'SEQ',

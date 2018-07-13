@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function fetchPage(url, query) {
+export function fetchQuery(url, query) {
   return request({
     url: url,
     method: 'post',
@@ -42,6 +42,7 @@ export function fetchUpdate(url, dict) {
 }
 
 export function fetchDelete(url) {
+  console.log(url);
   return request({
     url: url,
     method: 'delete'
