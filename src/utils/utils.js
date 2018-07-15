@@ -30,6 +30,11 @@ export function tableMethods(){
       this.currentPage = val;
       this.load();
     },
+    sortChange( column, prop, order ){
+      this.query.sort = prop;
+      this.query.order = order;
+      this.load();
+    },
     resetForm() {
       this.$refs['searchForm'].resetFields();
       this.reload();

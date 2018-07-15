@@ -107,6 +107,10 @@ export default {
     type: 'Type',
     code: 'Code',
     text: 'Text',
-    value: 'Value'
+    value: 'Value',
+    downLoad: 'DownLoad',
+    enum:{
+      downLoad:{1: 'YES', 0: 'NO'}
+    }
   }
 }

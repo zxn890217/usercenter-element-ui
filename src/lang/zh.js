@@ -107,6 +107,10 @@ export default {
     type: '类型',
     code: '编码',
     text: '描述',
-    value: '值'
+    value: '值',
+    downLoad: '下载',
+    enum:{
+      downLoad:{1: '是', 0: '否'}
+    }
   }
 }

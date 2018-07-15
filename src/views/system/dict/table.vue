@@ -27,10 +27,11 @@
     </el-row>
     <el-table v-loading="loading" :data="tableData" border highlight-current-row @row-click="onRowSelected" style="width: 100%">
       <el-table-column type="index" :label="$t('table.index')" :index="indexMethod" align="center" width="55"></el-table-column>
-      <el-table-column prop="type" :label="$t('dict.type')"></el-table-column>
+      <el-table-column prop="type" :label="$t('dict.type')" sortable></el-table-column>
       <el-table-column prop="code" :label="$t('dict.code')"></el-table-column>
       <el-table-column prop="text" :label="$t('dict.text')"></el-table-column>
       <el-table-column prop="value" :label="$t('dict.value')"></el-table-column>
+      <el-table-column prop="downLoad" :label="$t('dict.downLoad')" :formatter="downLoadFormatter"></el-table-column>
     </el-table>
     <div class="pagination-container">
       <el-pagination
@@ -40,6 +41,7 @@
         :current-page.sync="currentPage"
         :page-sizes="pageSizes"
         :page-size="pageSize"
+        :sort-change="sortChange"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total">
       </el-pagination>
@@ -67,7 +69,11 @@
       };
     },
     methods: {
-      ...tableMethods.apply(this)
+      ...tableMethods.apply(this),
+      downLoadFormatter: function(row, column, value, index){
+        if(value!=null && value!='')
+          return this.$t('dict.enum.downLoad.'+value);
+      }
     },
     mounted: function () {
       this.reload();
