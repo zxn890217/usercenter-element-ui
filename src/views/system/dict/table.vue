@@ -25,12 +25,12 @@
         <el-button type="default" size="small" icon="el-icon-refresh" @click="resetForm">{{$t('table.reset')}}</el-button>
       </el-button-group>
     </el-row>
-    <el-table v-loading="loading" :data="tableData" border highlight-current-row @row-click="onRowSelected" style="width: 100%">
+    <el-table v-loading="loading" :data="tableData" border highlight-current-row @row-click="onRowSelected" style="width: 100%" @sort-change="sortChange">
       <el-table-column type="index" :label="$t('table.index')" :index="indexMethod" align="center" width="55"></el-table-column>
       <el-table-column prop="type" :label="$t('dict.type')" sortable></el-table-column>
-      <el-table-column prop="code" :label="$t('dict.code')"></el-table-column>
+      <el-table-column prop="code" :label="$t('dict.code')" sortable></el-table-column>
       <el-table-column prop="text" :label="$t('dict.text')"></el-table-column>
-      <el-table-column prop="value" :label="$t('dict.value')"></el-table-column>
+      <el-table-column prop="value" :label="$t('dict.value')" sortable></el-table-column>
       <el-table-column prop="downLoad" :label="$t('dict.downLoad')" :formatter="downLoadFormatter"></el-table-column>
     </el-table>
     <div class="pagination-container">
@@ -41,7 +41,6 @@
         :current-page.sync="currentPage"
         :page-sizes="pageSizes"
         :page-size="pageSize"
-        :sort-change="sortChange"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total">
       </el-pagination>
@@ -61,11 +60,7 @@
     data() {
       return {
         ...tableOptions.apply(this),
-        baseUrl: '/dict',
-        query: {
-          sort: 'id',
-          order: 'desc'
-        }
+        baseUrl: '/dict'
       };
     },
     methods: {

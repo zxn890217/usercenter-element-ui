@@ -9,7 +9,8 @@ export function tableOptions(){
     pageSizes: [10, 20, 30, 50, 80, 100, 200],
     tableData: [],
     selectedRow: null,
-    loading: false
+    loading: false,
+    query: {}
   }
 }
 
@@ -30,12 +31,21 @@ export function tableMethods(){
       this.currentPage = val;
       this.load();
     },
-    sortChange( column, prop, order ){
-      this.query.sort = prop;
-      this.query.order = order;
+    sortChange(column, prop, order){
+      if(column){
+        this.query.sort = column.prop;
+        if(column.order == 'descending')
+          this.query.order = 'desc';
+        else
+          this.query.order = 'asc';
+      }
+      else{
+        this.query.sort = null;
+        this.query.order = null;
+      }
       this.load();
     },
-    resetForm() {
+    resetForm(){
       this.$refs['searchForm'].resetFields();
       this.reload();
     },

@@ -12,14 +12,14 @@ export function fetchQuery(url, query) {
 }
 
 
-export function fetchSave(url, dict) {
+export function fetchSave(url, data) {
   return request({
     url: url,
     method: 'post',
     headers: {
       'Content-Type': 'application/json'
     },
-    data: dict
+    data: data
   })
 }
 
@@ -30,14 +30,14 @@ export function fetchGet(url) {
   })
 }
 
-export function fetchUpdate(url, dict) {
+export function fetchUpdate(url, data) {
   return request({
     url: url,
     method: 'put',
     headers: {
       'Content-Type': 'application/json'
     },
-    data: dict
+    data: data
   })
 }
 
