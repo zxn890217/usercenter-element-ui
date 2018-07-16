@@ -83,7 +83,8 @@ export default {
     delete: 'DELETE',
     search: 'Search',
     reset: 'Reset',
-    refresh: 'Refresh'
+    refresh: 'Refresh',
+    detail: 'DETAIL'
   },
   rules:{
     message:{
@@ -110,7 +111,7 @@ export default {
     value: 'Value',
     downLoad: 'DownLoad',
     enum:{
-      downLoad:{1: 'YES', 0: 'NO'}
+      downLoad:{1: 'YES', 2: 'NO'}
     }
   }
 }

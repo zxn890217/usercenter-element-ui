@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import { fetchQuery, fetchDelete, fetchSave, fetchUpdate } from '@/api/restful'
+import { Loading } from 'element-ui'
 
 export function tableOptions(){
   return {
@@ -65,6 +66,9 @@ export function tableMethods(){
     },
     toDelete(){
       deleteTableRow.apply(this);
+    },
+    toDetail(){
+      detailTableRow.apply(this);
     }
   }
 }
@@ -127,6 +131,18 @@ export function updateTableRow(){
   }
 }
 
+
+export function detailTableRow(){
+  if(this.selectedRow)
+    this.$router.push({path: '/detail'});
+  else{
+    this.$message({
+      message: this.$t('notify.unselectedRow'),
+      type: 'warning'
+    });
+  }
+}
+
 export function deleteTableRow(pk){
   if(pk==undefined || pk==null){
     pk = 'id';
@@ -175,9 +191,9 @@ export function deleteTableRow(pk){
 }
 
 export function saveToSubmit(form){
+  let loading = Loading.service({ target: this.$el.childNodes[0] });
   this.$refs['dialog-form'].validate((valid) => {
     if(valid){
-      this.submitting = true;
       fetchSave(this.$parent.baseUrl, form).then(response => {
         if(response.data.success) {
           this.$notify.success({
@@ -192,19 +208,22 @@ export function saveToSubmit(form){
             title: this.$t('notify.title.fail'),
             message: response.data.msg
           });
-          this.submitting = false;
+          loading.close();
         }
       }).catch(() => {
-        this.submitting = false;
+        loading.close();
       })
+    }
+    else{
+      loading.close();
     }
   })
 }
 
 export function updateToSubmit(form){
+  let loading = Loading.service({ target: this.$el.childNodes[0] });
   this.$refs['dialog-form'].validate((valid) => {
     if(valid){
-      this.submitting = true;
       fetchUpdate(this.$parent.baseUrl, form).then(response => {
         if(response.data.success){
           this.$notify.success({
@@ -219,11 +238,14 @@ export function updateToSubmit(form){
             title: this.$t('notify.title.fail'),
             message: response.data.msg
           });
-          this.submitting = false;
+          loading.close();
         }
       }).catch(() => {
-        this.submitting = false;
+        loading.close();
       })
+    }
+    else{
+      loading.close();
     }
   })
 }

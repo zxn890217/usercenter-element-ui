@@ -83,7 +83,8 @@ export default {
     delete: '删除',
     search: '搜索',
     reset: '重置',
-    refresh: '刷新'
+    refresh: '刷新',
+    detail: '详情'
   },
   rules:{
     message:{
@@ -110,7 +111,7 @@ export default {
     value: '值',
     downLoad: '下载',
     enum:{
-      downLoad:{1: '是', 0: '否'}
+      downLoad:{1: '是', 2: '否'}
     }
   }
 }

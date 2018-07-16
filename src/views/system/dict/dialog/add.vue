@@ -13,11 +13,12 @@
       <el-form-item :label="$t('dict.value')" prop="value">
         <el-input v-model="form.value"></el-input>
       </el-form-item>
+      <el-form-item :label="$t('dict.downLoad')" prop="downLoad">
+        <el-radio v-model="form.downLoad" label="1">{{$t('dict.enum.downLoad.1')}}</el-radio>
+        <el-radio v-model="form.downLoad" label="2">{{$t('dict.enum.downLoad.2')}}</el-radio>
+      </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer"
-         v-loading="submitting"
-         :element-loading-text="$t('dialog.submitting')"
-         element-loading-spinner="el-icon-loading">
+    <div slot="footer" class="dialog-footer">
       <el-button @click="onClose">{{$t('dialog.cancel')}}</el-button>
       <el-button type="primary" @click="save">{{$t('dialog.save')}}</el-button>
     </div>
@@ -32,8 +33,9 @@
     data() {
       return {
         visible: true,
-        submitting: false,
-        form: {},
+        form: {
+          downLoad: '2'
+        },
         rules:{
           type:[
             { required: true, message:this.$t('rules.message.required'), trigger: 'blur' },

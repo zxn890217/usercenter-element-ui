@@ -19,6 +19,7 @@
         <el-button type="primary" size="small" icon="el-icon-plus" @click="toAdd">{{$t('table.add')}}</el-button>
         <el-button type="primary" size="small" icon="el-icon-edit" @click="toUpdate">{{$t('table.update')}}</el-button>
         <el-button type="primary" size="small" icon="el-icon-delete" @click="toDelete">{{$t('table.delete')}}</el-button>
+        <el-button type="primary" size="small" icon="el-icon-document" @click="toDetail">{{$t('table.detail')}}</el-button>
       </el-button-group>
       <el-button-group style="position: absolute; right: 0px;">
         <el-button type="primary" size="small" icon="el-icon-search" @click="reload">{{$t('table.search')}}</el-button>
@@ -77,7 +78,8 @@
       mode: 'abstract',
       routes: [
         { path: '/add', component: () => import('./dialog/add') },
-        { path: '/update', component: () => import('./dialog/update') }
+        { path: '/update', component: () => import('./dialog/update') },
+        { path: '/detail', component: () => import('./dialog/detail') }
       ]
     })
   }

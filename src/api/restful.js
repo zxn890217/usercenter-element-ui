@@ -11,7 +11,6 @@ export function fetchQuery(url, query) {
   })
 }
 
-
 export function fetchSave(url, data) {
   return request({
     url: url,
@@ -42,7 +41,6 @@ export function fetchUpdate(url, data) {
 }
 
 export function fetchDelete(url) {
-  console.log(url);
   return request({
     url: url,
     method: 'delete'
