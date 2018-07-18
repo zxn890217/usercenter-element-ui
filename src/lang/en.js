@@ -12,7 +12,8 @@ export default {
     theme: 'Theme',
     i18n: 'I18n',
     system: 'System',
-    dict: 'Dictionary'
+    dict: 'Dictionary',
+    authority: 'Authority'
   },
   navbar: {
     logOut: 'Log Out',
@@ -113,5 +114,10 @@ export default {
     enum:{
       downLoad:{1: 'YES', 2: 'NO'}
     }
+  },
+  authority:{
+    name: 'Name',
+    code: 'Code',
+    parent: 'Parent'
   }
 }

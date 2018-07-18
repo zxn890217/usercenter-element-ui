@@ -12,7 +12,8 @@ export default {
     theme: '换肤',
     i18n: '国际化',
     system: '系统管理',
-    dict: '数据字典'
+    dict: '数据字典',
+    authority: '权限管理'
   },
   navbar: {
     logOut: '退出登录',
@@ -113,5 +114,10 @@ export default {
     enum:{
       downLoad:{1: '是', 2: '否'}
     }
+  },
+  authority:{
+    name: '名称',
+    code: '代码',
+    parent: '父级'
   }
 }
