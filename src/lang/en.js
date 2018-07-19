@@ -78,7 +78,7 @@ export default {
     cancelDel: 'Deletion has been cancelled'
   },
   table: {
-    index: 'SEQ',
+    index: '#',
     add: 'ADD',
     update: 'UPDATE',
     delete: 'DELETE',

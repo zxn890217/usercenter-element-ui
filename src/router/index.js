@@ -71,7 +71,7 @@ export const asyncRouterMap = [
     },
     children: [
       { name: 'dict', path: 'dict', component: () => import('@/views/system/dict/table'), meta: { title: 'dict', icon: 'dict'}},
-      { name: 'authority', path: 'authority', component: () => import('@/views/system/authority/table'), meta: { title: 'authority', icon: 'authority'}}
+      { name: 'authority', path: 'authority', component: () => import('@/views/system/authority/treeTable'), meta: { title: 'authority', icon: 'authority'}}
     ]
   },
 

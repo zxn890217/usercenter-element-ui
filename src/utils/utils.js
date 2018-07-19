@@ -9,6 +9,7 @@ export function tableOptions(){
     pageSize: 10,
     pageSizes: [10, 20, 30, 50, 80, 100, 200],
     tableData: [],
+    multipleSelection: [],
     selectedRow: null,
     loading: false,
     query: {}
@@ -31,6 +32,9 @@ export function tableMethods(){
     handleCurrentChange(val) {
       this.currentPage = val;
       this.load();
+    },
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
     },
     sortChange(column, prop, order){
       if(column){

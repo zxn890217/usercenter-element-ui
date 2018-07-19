@@ -63,6 +63,7 @@
             ...tableMethods.apply(this)
         },
         mounted: function () {
+            console.log(this);
             this.reload();
         },
         router: new VueRouter({

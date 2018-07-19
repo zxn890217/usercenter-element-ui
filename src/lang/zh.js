@@ -78,7 +78,7 @@ export default {
     cancelDel: '已取消删除'
   },
   table: {
-    index: '序号',
+    index: '#',
     add: '添加',
     update: '修改',
     delete: '删除',
