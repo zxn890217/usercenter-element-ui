@@ -1,11 +1,11 @@
 <template>
   <el-dialog :title="$t('table.detail')" width="560px" :visible.sync="visible" @close="onClose">
     <el-form :model="form" label-width="70px" size="small">
-            <el-form-item :label="$t('authority.name')">
-        <el-input v-model="form.name" readonly></el-input>
+      <el-form-item :label="$t('role.name')">
+        <el-input readonly>{{form.name}}</el-input>
       </el-form-item>
-      <el-form-item :label="$t('authority.code')">
-        <el-input v-model="form.code" readonly></el-input>
+      <el-form-item :label="$t('role.createTime')">
+        <el-input readonly>{{form.createTime | longTimeFormatter}}</el-input>
       </el-form-item>
     </el-form>
   </el-dialog>
@@ -13,13 +13,11 @@
 
 <script>
   import { vsprintf } from 'sprintf-js/dist/sprintf.min.js'
+  import { commonFilters } from '@/utils/utils'
 
   export default {
     data() {
       var form = JSON.parse(JSON.stringify(this.$parent.selectedRow));
-      if(form.parent==null){
-        form.parent = {};
-      }
       return {
         visible: true,
         form: form
@@ -29,6 +27,9 @@
       onClose(){
         this.$router.push("/");
       }
+    },
+    filters: {
+      ...commonFilters.apply(this)
     }
   };
 </script>

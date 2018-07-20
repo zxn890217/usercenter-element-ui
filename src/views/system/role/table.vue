@@ -2,10 +2,7 @@
     <div class="app-container">
         <el-form :model="query" :inline="true" ref="searchForm">
             <el-form-item prop="name">
-                <el-input v-model="query.name" :placeholder="$t('authority.name')" clearable maxlength="30"></el-input>
-            </el-form-item>
-            <el-form-item prop="code">
-                <el-input v-model="query.code" :placeholder="$t('authority.code')" clearable maxlength="30"></el-input>
+                <el-input v-model="query.name" :placeholder="$t('role.name')" clearable maxlength="30"></el-input>
             </el-form-item>
         </el-form>
         <el-row style="margin-bottom: 10px;">
@@ -22,8 +19,8 @@
         </el-row>
         <el-table ref="table" :data="tableData" border highlight-current-row @row-click="onRowSelected" style="width: 100%" @sort-change="sortChange">
             <el-table-column type="index" :label="$t('table.index')" :index="indexMethod" align="center" width="55"></el-table-column>
-            <el-table-column prop="name" :label="$t('authority.name')"></el-table-column>
-            <el-table-column prop="code" :label="$t('authority.code')"></el-table-column>
+            <el-table-column prop="name" :label="$t('role.name')"></el-table-column>
+            <el-table-column prop="createTime" :label="$t('role.createTime')" :formatter="longTimeFormatter"></el-table-column>
         </el-table>
         <div class="pagination-container">
             <el-pagination
@@ -52,7 +49,7 @@
         data() {
             return {
                 ...tableOptions.apply(this),
-                baseUrl: '/authority',
+                baseUrl: '/role',
                 query: {
                     sort: 'id',
                     order: 'desc'
@@ -60,15 +57,9 @@
             };
         },
         methods: {
-            ...tableMethods.apply(this),
-          parentFormatter: function(row, column, value, index){
-                if(row.parent)
-                    return row.parent.name;
-                return '';
-            }
+            ...tableMethods.apply(this)
         },
         mounted: function () {
-            console.log(this.$refs['table']);
             this.reload();
         },
         router: new VueRouter({

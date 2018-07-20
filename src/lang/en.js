@@ -13,7 +13,8 @@ export default {
     i18n: 'I18n',
     system: 'System',
     dict: 'Dictionary',
-    authority: 'Authority'
+    authority: 'Authority',
+    role: 'Role'
   },
   navbar: {
     logOut: 'Log Out',
@@ -85,7 +86,8 @@ export default {
     search: 'Search',
     reset: 'Reset',
     refresh: 'Refresh',
-    detail: 'DETAIL'
+    detail: 'DETAIL',
+    opt: 'Operation'
   },
   rules:{
     message:{
@@ -117,7 +119,13 @@ export default {
   },
   authority:{
     name: 'Name',
-    code: 'Code',
-    parent: 'Parent'
+    code: 'Code'
+  },
+  role:{
+    name: 'Name',
+    createTime: 'CreateTime',
+    authorities: 'Authorities',
+    authorityName: 'Authority Name',
+    authorityExists: 'This authority is exists'
   }
 }

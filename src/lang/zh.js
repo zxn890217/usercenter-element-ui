@@ -13,7 +13,8 @@ export default {
     i18n: '国际化',
     system: '系统管理',
     dict: '数据字典',
-    authority: '权限管理'
+    authority: '权限管理',
+    role: '角色管理'
   },
   navbar: {
     logOut: '退出登录',
@@ -85,7 +86,8 @@ export default {
     search: '搜索',
     reset: '重置',
     refresh: '刷新',
-    detail: '详情'
+    detail: '详情',
+    opt: '操作'
   },
   rules:{
     message:{
@@ -117,7 +119,13 @@ export default {
   },
   authority:{
     name: '名称',
-    code: '代码',
-    parent: '父级'
+    code: '代码'
+  },
+  role:{
+    name: '名称',
+    createTime: '创建时间',
+    authorities: '权限',
+    authorityName: '权限名称',
+    authorityExists: '权限已添加'
   }
 }

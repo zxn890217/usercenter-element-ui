@@ -7,16 +7,6 @@
       <el-form-item :label="$t('authority.code')" prop="code">
         <el-input v-model="form.code"></el-input>
       </el-form-item>
-      <el-form-item :label="$t('authority.parent')" prop="parentId">
-        <el-select v-model="form.parent.id" filterable placeholder="请选择" clearable :loading="loadingAuthorities" style="width: 100%;">
-          <el-option
-            v-for="item in authorities"
-            :key="item.id"
-            :label="item.name"
-            :value="item.id">
-          </el-option>
-        </el-select>
-      </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="onClose">{{$t('dialog.cancel')}}</el-button>
