@@ -23,7 +23,6 @@
 
 <script>
   import { vsprintf } from 'sprintf-js/dist/sprintf.min.js'
-  import { Loading } from 'element-ui'
 
   export default {
     data() {
@@ -37,10 +36,6 @@
       onClose(){
         this.$router.push("/");
       }
-    },
-    mounted: function(){
-      console.log(this);
-      let loading = Loading.service({ target: this.$el.childNodes[0] });
     }
   };
 </script>

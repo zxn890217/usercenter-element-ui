@@ -1,8 +1,14 @@
 <template>
     <div class="app-container">
         <el-form :model="query" :inline="true" ref="searchForm">
-            <el-form-item prop="name">
-                <el-input v-model="query.name" :placeholder="$t('role.name')" clearable maxlength="30"></el-input>
+                        <el-form-item prop="name">
+                <el-input v-model="query.name" :placeholder="$t('userGroup.name')" clearable maxlength="30"></el-input>
+            </el-form-item>
+            <el-form-item prop="pid">
+                <el-input v-model="query.pid" :placeholder="$t('userGroup.pid')" clearable maxlength="30"></el-input>
+            </el-form-item>
+            <el-form-item prop="path">
+                <el-input v-model="query.path" :placeholder="$t('userGroup.path')" clearable maxlength="30"></el-input>
             </el-form-item>
         </el-form>
         <el-row style="margin-bottom: 10px;">
@@ -19,9 +25,9 @@
         </el-row>
         <el-table ref="table" :data="tableData" border highlight-current-row @row-click="onRowSelected" style="width: 100%" @sort-change="sortChange">
             <el-table-column type="index" :label="$t('table.index')" :index="indexMethod" align="center" width="55"></el-table-column>
-            <el-table-column prop="name" :label="$t('role.name')"></el-table-column>
-            <el-table-column prop="authorities" :label="$t('role.authorities')" :formatter="authoritiesFormatter"></el-table-column>
-            <el-table-column prop="createTime" :label="$t('role.createTime')" :formatter="longTimeFormatter"></el-table-column>
+            <el-table-column prop="name" :label="$t('userGroup.name')"></el-table-column>
+            <el-table-column prop="pid" :label="$t('userGroup.pid')"></el-table-column>
+            <el-table-column prop="path" :label="$t('userGroup.path')"></el-table-column>
         </el-table>
         <div class="pagination-container">
             <el-pagination
@@ -31,6 +37,7 @@
                     :current-page.sync="currentPage"
                     :page-sizes="pageSizes"
                     :page-size="pageSize"
+                    :sort-change="sortChange"
                     layout="total, sizes, prev, pager, next, jumper"
                     :total="total">
             </el-pagination>
@@ -50,7 +57,7 @@
         data() {
             return {
                 ...tableOptions.apply(this),
-                baseUrl: '/role',
+                baseUrl: '/userGroup',
                 query: {
                     sort: 'id',
                     order: 'desc'
@@ -58,15 +65,7 @@
             };
         },
         methods: {
-            ...tableMethods.apply(this),
-            authoritiesFormatter(row, column, value, index){
-                if(row.authorities){
-                    return row.authorities.map(item => {
-                        return item.name;
-                    }).join(' ');
-                }
-                return '';
-            }
+            ...tableMethods.apply(this)
         },
         mounted: function () {
             this.reload();

@@ -127,5 +127,10 @@ export default {
     authorities: '权限',
     authorityName: '权限名称',
     authorityExists: '权限已添加'
+  },
+  userGroup:{
+    name: '组名',
+    parent: '父级',
+    path: '路径'
   }
 }

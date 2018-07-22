@@ -7,7 +7,9 @@
             <el-input v-model="form.name"></el-input>
           </el-form-item>
           <el-form-item :label="$t('role.authorities')">
-            <el-tag v-for="(authority, index) in form.authorities" size="small" closable @close="onTagClose(index)">{{authority.name}}</el-tag>
+            <div style="border: 1px solid #dcdfe6; min-height: 30px;">
+              <el-tag type="small" v-for="(authority, index) in form.authorities" closable @close="onTagClose(index)" style="margin-left: 5px;">{{authority.name}}</el-tag>
+            </div>
           </el-form-item>
         </el-form>
       </el-col>
@@ -20,15 +22,17 @@
             <el-button type="primary" size="small" icon="el-icon-search" @click="reloadAuthorities">{{$t('table.search')}}</el-button>
           </el-form-item>
         </el-form>
-        <el-table ref="table" :data="authoritiesData" border highlight-current-row  style="width: 100%" max-height="400">
-          <el-table-column prop="name" :label="$t('authority.name')"></el-table-column>
-          <el-table-column prop="code" :label="$t('authority.code')"></el-table-column>
-          <el-table-column :label="$t('table.opt')">
-            <template slot-scope="scope">
-              <el-button type="primary" @click="addAuthority(scope.row)">{{$t('table.add')}}</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
+        <div style="padding-left: 20px;">
+          <el-table ref="table" :data="authoritiesData" size="mini" border highlight-current-row  style="width: 100%;" height="400">
+            <el-table-column prop="name" :label="$t('authority.name')"></el-table-column>
+            <el-table-column prop="code" :label="$t('authority.code')"></el-table-column>
+            <el-table-column :label="$t('table.opt')" width="80">
+              <template slot-scope="scope">
+                <el-button type="primary" size="mini" @click="addAuthority(scope.row)">{{$t('table.add')}}</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
       </el-col>
     </el-row>
     <div slot="footer" class="dialog-footer">

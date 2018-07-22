@@ -127,5 +127,10 @@ export default {
     authorities: 'Authorities',
     authorityName: 'Authority Name',
     authorityExists: 'This authority is exists'
+  },
+  userGroup:{
+    name: 'Name',
+    parent: 'Parent',
+    path: 'Path'
   }
 }
