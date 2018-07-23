@@ -14,7 +14,8 @@ export default {
     system: '系统管理',
     dict: '数据字典',
     authority: '权限管理',
-    role: '角色管理'
+    role: '角色管理',
+    userGroup: '用户组'
   },
   navbar: {
     logOut: '退出登录',
@@ -119,7 +120,8 @@ export default {
   },
   authority:{
     name: '名称',
-    code: '代码'
+    code: '代码',
+    groups: '用户组'
   },
   role:{
     name: '名称',
@@ -130,7 +132,9 @@ export default {
   },
   userGroup:{
     name: '组名',
-    parent: '父级',
-    path: '路径'
+    authorities: '权限',
+    authorityName: '权限名称',
+    authorityExists: '权限已添加',
+    parent: '父级'
   }
 }

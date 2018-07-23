@@ -7,6 +7,16 @@
       <el-form-item :label="$t('authority.code')" prop="code">
         <el-input v-model="form.code"></el-input>
       </el-form-item>
+      <el-form-item :label="$t('authority.groups')">
+        <el-select v-model="selectedOptions" multiple placeholder="请选择" style="width: 100%;">
+          <el-option
+            v-for="item in groups"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id">
+          </el-option>
+        </el-select>
+      </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
             <el-button @click="onClose">{{$t('dialog.cancel')}}</el-button>
@@ -25,41 +35,39 @@
     data() {
       return {
         visible: true,
-        loadingAuthorities: true,
-        authorities: [],
-        form: {
-          parent: {
-            id: null
-          }
-        },
-          rules:{
-            name:[
-              { required: true, message:this.$t('rules.message.required'), trigger: 'blur' },
-              { max: 20, message: vsprintf(this.$t('rules.message.maxLen'), 20), trigger: 'blur' }
-            ],
-            code:[
-              { required: true, message:this.$t('rules.message.required'), trigger: 'blur' },
-              { max: 20, message: vsprintf(this.$t('rules.message.maxLen'), 20), trigger: 'blur' }
-            ]
-          }
+        groups: [],
+        selectedOptions: [],
+        form: {},
+        rules:{
+          name:[
+            { required: true, message:this.$t('rules.message.required'), trigger: 'blur' },
+            { max: 20, message: vsprintf(this.$t('rules.message.maxLen'), 20), trigger: 'blur' }
+          ],
+          code:[
+            { required: true, message:this.$t('rules.message.required'), trigger: 'blur' },
+            { max: 20, message: vsprintf(this.$t('rules.message.maxLen'), 20), trigger: 'blur' }
+          ]
+        }
       };
     },
     methods: {
       save(){
+        this.form.groups = this.selectedOptions.map(item => {
+          return {id: item};
+        });
         saveToSubmit.apply(this, [this.form])
       },
       onClose(){
         this.$router.push("/");
       }
     },
-    mounted: function(){
-      fetchQuery('/authority/query', {}).then(response => {
-        if(response.data.success) {
-          for(var i=0; i<response.data.result.length; i++) {
-            Vue.set(this.authorities, i, response.data.result[i]);
+    mounted(){
+      fetchQuery('/userGroup/query',{}).then(response => {
+        if(response.data.success){
+          for(let i=0; i<response.data.result.length; i++){
+            Vue.set(this.groups, i, response.data.result[i]);
           }
         }
-        this.loadingAuthorities = false;
       })
     }
   };

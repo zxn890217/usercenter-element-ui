@@ -14,7 +14,8 @@ export default {
     system: 'System',
     dict: 'Dictionary',
     authority: 'Authority',
-    role: 'Role'
+    role: 'Role',
+    userGroup: 'UserGroup'
   },
   navbar: {
     logOut: 'Log Out',
@@ -119,7 +120,8 @@ export default {
   },
   authority:{
     name: 'Name',
-    code: 'Code'
+    code: 'Code',
+    groups: 'UserGroup'
   },
   role:{
     name: 'Name',
@@ -130,7 +132,9 @@ export default {
   },
   userGroup:{
     name: 'Name',
-    parent: 'Parent',
-    path: 'Path'
+    authorities: 'Authorities',
+    authorityName: 'Authority Name',
+    authorityExists: 'This authority is exists',
+    parent: 'Parent'
   }
 }

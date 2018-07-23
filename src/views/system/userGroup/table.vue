@@ -1,14 +1,8 @@
 <template>
     <div class="app-container">
         <el-form :model="query" :inline="true" ref="searchForm">
-                        <el-form-item prop="name">
+            <el-form-item prop="name">
                 <el-input v-model="query.name" :placeholder="$t('userGroup.name')" clearable maxlength="30"></el-input>
-            </el-form-item>
-            <el-form-item prop="pid">
-                <el-input v-model="query.pid" :placeholder="$t('userGroup.pid')" clearable maxlength="30"></el-input>
-            </el-form-item>
-            <el-form-item prop="path">
-                <el-input v-model="query.path" :placeholder="$t('userGroup.path')" clearable maxlength="30"></el-input>
             </el-form-item>
         </el-form>
         <el-row style="margin-bottom: 10px;">
@@ -26,8 +20,7 @@
         <el-table ref="table" :data="tableData" border highlight-current-row @row-click="onRowSelected" style="width: 100%" @sort-change="sortChange">
             <el-table-column type="index" :label="$t('table.index')" :index="indexMethod" align="center" width="55"></el-table-column>
             <el-table-column prop="name" :label="$t('userGroup.name')"></el-table-column>
-            <el-table-column prop="pid" :label="$t('userGroup.pid')"></el-table-column>
-            <el-table-column prop="path" :label="$t('userGroup.path')"></el-table-column>
+            <el-table-column prop="parent" :label="$t('userGroup.parent')" :formatter="parentFormatter"></el-table-column>
         </el-table>
         <div class="pagination-container">
             <el-pagination
@@ -65,7 +58,13 @@
             };
         },
         methods: {
-            ...tableMethods.apply(this)
+            ...tableMethods.apply(this),
+            parentFormatter(row, column, cellValue, index){
+                if(row.parent){
+                    return row.parent.name;
+                }
+                return '';
+            }
         },
         mounted: function () {
             this.reload();

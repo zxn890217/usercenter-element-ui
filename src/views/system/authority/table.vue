@@ -24,6 +24,7 @@
             <el-table-column type="index" :label="$t('table.index')" :index="indexMethod" align="center" width="55"></el-table-column>
             <el-table-column prop="name" :label="$t('authority.name')"></el-table-column>
             <el-table-column prop="code" :label="$t('authority.code')"></el-table-column>
+            <el-table-column prop="groups" :label="$t('authority.groups')" :formatter="groupsFormatter"></el-table-column>
         </el-table>
         <div class="pagination-container">
             <el-pagination
@@ -61,9 +62,11 @@
         },
         methods: {
             ...tableMethods.apply(this),
-          parentFormatter: function(row, column, value, index){
-                if(row.parent)
-                    return row.parent.name;
+            groupsFormatter: function(row, column, value, index){
+                if(row.groups)
+                    return row.groups.map(group => {
+                        return group.name;
+                    }).join(" ");
                 return '';
             }
         },

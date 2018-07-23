@@ -7,6 +7,16 @@
       <el-form-item :label="$t('authority.code')" prop="code">
         <el-input v-model="form.code"></el-input>
       </el-form-item>
+      <el-form-item :label="$t('authority.groups')">
+        <el-select v-model="selectedOptions" multiple placeholder="请选择" style="width: 100%;">
+          <el-option
+            v-for="item in groups"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id">
+          </el-option>
+        </el-select>
+      </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="onClose">{{$t('dialog.cancel')}}</el-button>
@@ -24,14 +34,17 @@
   export default {
     data() {
       var form = JSON.parse(JSON.stringify(this.$parent.selectedRow));
-      if(form.parent==null){
-        form.parent = {};
+      var selectedOptions = [];
+      if(form.groups){
+        selectedOptions = form.groups.map(item=>{
+            return item.id;
+        });
       }
       return {
         visible: true,
-        loadingAuthorities: true,
-        authorities: [],
         form: form,
+        groups: [],
+        selectedOptions: selectedOptions,
         rules:{
           name: [
             { required: true, message:this.$t('rules.message.required'), trigger: 'blur' },
@@ -46,28 +59,22 @@
     },
     methods: {
       save(){
-        var params = JSON.parse(JSON.stringify(this.form));
-        if(!params.parent.id){
-            delete params.parent;
-        }
-        updateToSubmit.apply(this, [params])
+        this.form.groups = this.selectedOptions.map(item => {
+          return {id: item};
+        });
+        updateToSubmit.apply(this, [this.form]);
       },
       onClose(){
         this.$router.push("/");
       }
     },
-    mounted: function(){
-      fetchQuery('/authority/query', {unpath: this.$parent.selectedRow.id}).then(response => {
-        if(response.data.success) {
-          let count = 0;
-          for(var i=0; i<response.data.result.length; i++) {
-            let row = response.data.result[i];
-            if(this.$parent.selectedRow.id != row.id){
-              Vue.set(this.authorities, count++, row);
-            }
+    mounted(){
+      fetchQuery('/userGroup/query',{}).then(response => {
+        if(response.data.success){
+          for(let i=0; i<response.data.result.length; i++){
+            Vue.set(this.groups, i, response.data.result[i]);
           }
         }
-        this.loadingAuthorities = false;
       })
     }
   };
