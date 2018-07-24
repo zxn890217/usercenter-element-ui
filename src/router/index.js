@@ -73,7 +73,7 @@ export const asyncRouterMap = [
       { name: 'dict', path: 'dict', component: () => import('@/views/system/dict/table'), meta: { title: 'dict', icon: 'dict'}},
       { name: 'authority', path: 'authority', component: () => import('@/views/system/authority/table'), meta: { title: 'authority', icon: 'authority'}},
       { name: 'role', path: 'role', component: () => import('@/views/system/role/table'), meta: { title: 'role', icon: 'role'}},
-      { name: 'userGroup', path: 'userGroup', component: () => import('@/views/system/userGroup/table'), meta: { title: 'userGroup', icon: 'userGroup'}}
+      { name: 'userGroup', path: 'userGroup', component: () => import('@/views/system/userGroup/tree'), meta: { title: 'userGroup', icon: 'userGroup'}}
     ]
   },
 
