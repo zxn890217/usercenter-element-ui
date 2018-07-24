@@ -1,24 +1,31 @@
 <template>
-  <div class="app-container">
-    <el-row style="margin-bottom: 10px;">
-      <el-button-group>
-        <el-button type="primary" size="small" icon="el-icon-plus" @click="toAdd">{{$t('table.add')}}</el-button>
-        <el-button type="primary" size="small" icon="el-icon-edit" @click="toUpdate">{{$t('table.update')}}</el-button>
-        <el-button type="primary" size="small" icon="el-icon-delete" @click="toDelete">{{$t('table.delete')}}</el-button>
-        <el-button type="primary" size="small" icon="el-icon-document" @click="toDetail">{{$t('table.detail')}}</el-button>
-      </el-button-group>
-    </el-row>
-    <el-tree
-      :data="data"
-      :props="defaultProps"
-      :expand-on-click-node="false"
-      :highlight-current="true"
-      @node-click="handleNodeClick"></el-tree>
+  <div>
+    <div class="app-container">
+      <el-row style="margin-bottom: 10px;">
+        <el-button-group>
+          <el-button type="primary" size="small" icon="el-icon-plus" @click="toAdd">{{$t('table.add')}}</el-button>
+          <el-button type="primary" size="small" icon="el-icon-edit" @click="toUpdate">{{$t('table.update')}}</el-button>
+          <el-button type="primary" size="small" icon="el-icon-delete" @click="toDelete">{{$t('table.delete')}}</el-button>
+          <el-button type="primary" size="small" icon="el-icon-document" @click="toDetail">{{$t('table.detail')}}</el-button>
+        </el-button-group>
+      </el-row>
+      <el-tree
+        :data="data"
+        :props="defaultProps"
+        :expand-on-click-node="false"
+        default-expand-all
+        :highlight-current="true"
+        @node-click="handleNodeClick"></el-tree>
+    </div>
+    <transition name="fade">
+      <router-view/>
+    </transition>
   </div>
 </template>
 
 <script>
   import Vue from 'vue'
+  import VueRouter from 'vue-router'
   import { fetchQuery, fetchDelete, fetchSave, fetchUpdate } from '@/api/restful'
 
   export default {
@@ -29,26 +36,81 @@
           children: 'children',
           label: 'name'
         },
-        selectedNode: null
+        selectedRow: null,
+        baseUrl: '/userGroup',
       };
     },
     methods: {
       handleNodeClick(data) {
-        this.selectedNode = data;
+        this.selectedRow = data;
       },
       toAdd(){
-
+        this.$router.push({path: '/add'});
       },
       toUpdate(){
-
+        if(this.selectedRow)
+          this.$router.push({path: '/update'});
+        else{
+          this.$message({
+            message: this.$t('notify.unselectedRow'),
+            type: 'warning'
+          });
+        }
       },
       toDelete(){
-
+        if(this.selectedRow) {
+          this.$confirm(
+            this.$t('notify.confirmToDel'),
+            this.$t('notify.title.prompt'),
+            {
+              confirmButtonText: this.$t('dialog.confirm'),
+              cancelButtonText: this.$t('dialog.cancel'),
+              type: 'warning'
+            }
+          ).then(() => {
+            this.loading = true;
+            fetchDelete(this.baseUrl + '/' + this.selectedRow.id).then(response => {
+              if (response.data.success) {
+                this.$notify.success({
+                  title: this.$t('notify.title.success'),
+                  message: response.data.msg
+                });
+                this.load();
+              }
+              else {
+                this.loading = false;
+                this.$notify.warning({
+                  title: this.$t('notify.title.fail'),
+                  message: response.data.msg
+                });
+              }
+            })
+          }).catch(() => {
+            this.loading = false;
+            this.$message({
+              type: 'info',
+              message: this.$t('notify.cancelDel')
+            });
+          });
+        }
+        else{
+          this.$message({
+            message: this.$t('notify.unselectedRowToDel'),
+            type: 'warning'
+          });
+        }
       },
       toDetail(){
-
+        if(this.selectedRow)
+          this.$router.push({path: '/detail'});
+        else{
+          this.$message({
+            message: this.$t('notify.unselectedRow'),
+            type: 'warning'
+          });
+        }
       },
-      loadData(){
+      load(){
         fetchQuery('/userGroup/query',{}).then(response => {
           if(response.data.success){
             var rows = response.data.result;
@@ -69,7 +131,7 @@
           let row = rows[i];
           if(row.parent==null || row.parent.id==0){
             roots.push(row);
-            delete row.parent;
+            //delete row.parent;
           }
         }
         return roots;
@@ -80,7 +142,7 @@
           let row = rows[i];
           if(row.parent!=null && row.parent.id==pid){
             children.push(row);
-            delete row.parent;
+            //delete row.parent;
             row.children = this.getChildren(rows, row.id);
           }
         }
@@ -88,7 +150,15 @@
       }
     },
     mounted(){
-      this.loadData();
-    }
+      this.load();
+    },
+    router: new VueRouter({
+      mode: 'abstract',
+      routes: [
+        { path: '/add', component: () => import('./dialog/add') },
+        { path: '/update', component: () => import('./dialog/update') },
+        { path: '/detail', component: () => import('./dialog/detail') }
+      ]
+    })
   };
 </script>

@@ -5,12 +5,12 @@
         <el-input v-model="form.name"></el-input>
       </el-form-item>
       <el-form-item :label="$t('userGroup.parent')">
-        <el-select v-model="form.parent" filterable clearable placeholder="请选择" style="width: 100%">
+        <el-select v-model="form.parent.id" filterable clearable placeholder="请选择" style="width: 100%">
           <el-option
             v-for="item in groups"
             :key="item.id"
             :label="item.name"
-            :value="item">
+            :value="item.id">
           </el-option>
         </el-select>
       </el-form-item>
@@ -30,9 +30,15 @@
 
   export default {
     data() {
+      var form = {
+          parent: {}
+      };
+      if(this.$parent.selectedRow){
+        form.parent.id = this.$parent.selectedRow.id
+      }
       return {
         visible: true,
-        form: {},
+        form: form,
         groups: [],
         rules:{
           name:[
