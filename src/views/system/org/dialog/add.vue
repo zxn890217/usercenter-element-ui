@@ -1,25 +1,19 @@
 <template>
   <el-dialog :title="$t('table.add')" width="500px" :visible.sync="visible" @close="onClose">
-    <el-form :model="form" :rules="rules" ref="dialog-form" size="small">
-      <el-form-item :label="$t('userGroup.name')" prop="name">
+    <el-form :model="form" :rules="rules" ref="dialog-form" label-width="70px" size="small">
+      <el-form-item :label="$t('org.name')" prop="name">
         <el-input v-model="form.name"></el-input>
       </el-form-item>
-      <el-form-item :label="$t('userGroup.autoAuth')">
-        <el-radio v-model="form.autoAuth" label="0">{{$t('userGroup.enum.autoAuth.0')}}</el-radio>
-        <el-radio v-model="form.autoAuth" label="1">{{$t('userGroup.enum.autoAuth.1')}}</el-radio>
+      <el-form-item :label="$t('org.region')" prop="regionCode">
+        <area-cascader v-model="region" :data="pcaa" :level="1" @change="onRegionChange" placeholder="请选择地区"></area-cascader>
       </el-form-item>
-      <el-form-item :label="$t('userGroup.peerAuth')">
-        <el-radio v-model="form.peerAuth" label="0">{{$t('userGroup.enum.peerAuth.0')}}</el-radio>
-        <el-radio v-model="form.peerAuth" label="1">{{$t('userGroup.enum.peerAuth.1')}}</el-radio>
+      <el-form-item :label="$t('org.street')" prop="street">
+        <el-input v-model="form.street"></el-input>
       </el-form-item>
-      <el-form-item :label="$t('userGroup.childAuth')">
-        <el-radio v-model="form.childAuth" label="0">{{$t('userGroup.enum.childAuth.0')}}</el-radio>
-        <el-radio v-model="form.childAuth" label="1">{{$t('userGroup.enum.childAuth.1')}}</el-radio>
-      </el-form-item>
-      <el-form-item :label="$t('userGroup.parent')">
+      <el-form-item :label="$t('org.parent')">
         <el-select v-model="form.parent.id" filterable clearable placeholder="请选择" style="width: 100%">
           <el-option
-            v-for="item in groups"
+            v-for="item in orgs"
             :key="item.id"
             :label="item.name"
             :value="item.id">
@@ -34,8 +28,21 @@
   </el-dialog>
 </template>
 
+<style>
+  .area-select .area-selected-trigger{
+    padding: 0px 15px !important;
+  }
+  .area-select{
+    width: 100% !important;
+  }
+  .el-form-item.is-error .area-select{
+    border-color: #f56c6c;
+  }
+</style>
+
 <script>
   import Vue from 'vue'
+  import { pcaa } from 'area-data'
   import { vsprintf } from 'sprintf-js/dist/sprintf.min.js'
   import { saveToSubmit } from '@/utils/utils'
   import { fetchQuery } from '@/api/restful'
@@ -54,9 +61,18 @@
       return {
         visible: true,
         form: form,
-        groups: [],
+        region: null,
+        orgs: [],
+        pcaa: pcaa,
         rules:{
           name:[
+            { required: true, message:this.$t('rules.message.required'), trigger: 'blur' },
+            { max: 20, message: vsprintf(this.$t('rules.message.maxLen'), 20), trigger: 'blur' }
+          ],
+          regionCode:[
+            { required: true, message:this.$t('rules.message.required'), trigger: 'blur' },
+          ],
+          street:[
             { required: true, message:this.$t('rules.message.required'), trigger: 'blur' },
             { max: 20, message: vsprintf(this.$t('rules.message.maxLen'), 20), trigger: 'blur' }
           ]
@@ -69,13 +85,19 @@
       },
       onClose(){
         this.$router.push("/");
+      },
+      onRegionChange(val){
+        if(val.length==3)
+          this.form.regionCode = val[2];
+        console.log(this.region)
+        console.log(val);
       }
     },
     mounted(){
-      fetchQuery('/userGroup/query',{}).then(response => {
+      fetchQuery('/org/query', {}).then(response => {
         if(response.data.success) {
           for(var i=0; i<response.data.result.length; i++) {
-            Vue.set(this.groups, i, response.data.result[i]);
+            Vue.set(this.orgs, i, response.data.result[i]);
           }
         }
       })

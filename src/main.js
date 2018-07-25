@@ -1,6 +1,7 @@
 import Vue from 'vue'
 
 import 'normalize.css/normalize.css'// A modern alternative to CSS resets
+import 'vue-area-linkage/dist/index.css'; // v2 or higher
 
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -10,6 +11,7 @@ import '@/styles/index.scss' // global css
 import App from './App'
 import router from './router'
 import store from './store'
+import VueAreaLinkage from 'vue-area-linkage'
 
 import i18n from './lang' // Internationalization
 import './icons' // icon
@@ -18,6 +20,8 @@ import './permission' // permission control
 import './mock' // simulation data
 
 import * as filters from './filters' // global filters
+
+Vue.use(VueAreaLinkage)
 
 Vue.use(Element, {
   size: 'medium', // set element-ui default size

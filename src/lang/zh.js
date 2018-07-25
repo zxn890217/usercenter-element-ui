@@ -15,7 +15,8 @@ export default {
     dict: '数据字典',
     authority: '权限管理',
     role: '角色管理',
-    userGroup: '用户组'
+    userGroup: '用户组',
+    org: '组织管理'
   },
   navbar: {
     logOut: '退出登录',
@@ -135,6 +136,20 @@ export default {
     authorities: '权限',
     authorityName: '权限名称',
     authorityExists: '权限已添加',
+    parent: '父级',
+    autoAuth: '自动授权',
+    peerAuth: '同级授权',
+    childAuth: '下级授权',
+    enum:{
+      autoAuth: {1: '是', 0: '否'},
+      peerAuth: {1: '是', 0: '否'},
+      childAuth: {1: '是', 0: '否'}
+    }
+  },
+  org: {
+    name: '名称',
+    region: '地区',
+    street: '街道',
     parent: '父级'
   }
 }

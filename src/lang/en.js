@@ -15,7 +15,8 @@ export default {
     dict: 'Dictionary',
     authority: 'Authority',
     role: 'Role',
-    userGroup: 'UserGroup'
+    userGroup: 'UserGroup',
+    org: 'Organization'
   },
   navbar: {
     logOut: 'Log Out',
@@ -135,6 +136,20 @@ export default {
     authorities: 'Authorities',
     authorityName: 'Authority Name',
     authorityExists: 'This authority is exists',
+    parent: 'Parent',
+    autoAuth: 'Auto Authorization',
+    peerAuth: 'Peer Authorization',
+    childAuth: 'Child Authorization',
+    enum:{
+      autoAuth: {1: 'YES', 0: 'NO'},
+      peerAuth: {1: 'YES', 0: 'NO'},
+      childAuth: {1: 'YES', 0: 'NO'}
+    }
+  },
+  org: {
+    name: 'Name',
+    region: 'Region',
+    street: 'Street',
     parent: 'Parent'
   }
 }
