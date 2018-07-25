@@ -5,7 +5,12 @@
         <el-input v-model="form.name"></el-input>
       </el-form-item>
       <el-form-item :label="$t('org.region')" prop="regionCode">
-        <area-cascader v-model="region" :data="pcaa" :level="1" @change="onRegionChange" placeholder="请选择地区"></area-cascader>
+        <el-cascader
+          size="small"
+          :options="addressData"
+          v-model="region"
+          @change="onRegionChange">
+        </el-cascader>
       </el-form-item>
       <el-form-item :label="$t('org.street')" prop="street">
         <el-input v-model="form.street"></el-input>
@@ -42,7 +47,7 @@
 
 <script>
   import Vue from 'vue'
-  import { pcaa } from 'area-data'
+  import { regionData } from 'element-china-area-data'
   import { vsprintf } from 'sprintf-js/dist/sprintf.min.js'
   import { saveToSubmit } from '@/utils/utils'
   import { fetchQuery } from '@/api/restful'
@@ -61,9 +66,9 @@
       return {
         visible: true,
         form: form,
+        addressData: regionData,
         region: null,
         orgs: [],
-        pcaa: pcaa,
         rules:{
           name:[
             { required: true, message:this.$t('rules.message.required'), trigger: 'blur' },
@@ -87,10 +92,10 @@
         this.$router.push("/");
       },
       onRegionChange(val){
-        if(val.length==3)
+        if(val.length==3){
           this.form.regionCode = val[2];
-        console.log(this.region)
-        console.log(val);
+          this.form.regionName = '';
+        }
       }
     },
     mounted(){
